@@ -1,0 +1,37 @@
+{
+  "author": "Pierce Moore <me@prex.io>",
+  "name": "rex-exec",
+  "description": "A small set of functions designed to provide a simple way to execute shell commands and process the output.",
+  "homepage": "https://github.com/rex/rex-exec",
+  "version": "0.0.1",
+  "main": "lib/rex-exec.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rex/rex-exec.git"
+  },
+  "keywords": [
+    "shell",
+    "console",
+    "execute",
+    "bash",
+    "cli",
+    "rex"
+  ],
+  "license": "MIT",
+  "readmeFilename": "README.md",
+  "directories": {
+    "lib": "./lib",
+    "test": "./test"
+  },
+  "dependencies": {
+    "underscore": "*",
+    "rex-shell" : "*"
+  },
+  "config": {},
+  "bugs": {
+    "url": "https://github.com/rex/rex-exec/issues"
+  },
+  "scripts": {
+    "test": "node ./test/rex-exec.test.js"
+  }
+}
