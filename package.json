@@ -24,8 +24,10 @@
     "test": "./test"
   },
   "dependencies": {
-    "underscore": "*",
     "rex-shell" : "*"
+  },
+  "devDependencies" : {
+    "async" : "*"
   },
   "config": {},
   "bugs": {

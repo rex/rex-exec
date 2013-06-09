@@ -34,32 +34,66 @@
 # THE SOFTWARE.
 # 
 #######*/ 
-var _ = require('underscore')._
-  , exec = require('../lib/rex-exec.js')
+var exec = require('../lib/rex-exec.js')
   , cli = require('rex-shell')
+  , async = require('async')
   
-cli("Unit tests for rex-exec are not configured yet. Patience!")
+cli.config.messages.error = "FAILED"
+cli.config.messages.success = "PASSED"
+cli.config.appName("rex-exec tests")
 
-exec.do("~/GitHub/rex/rex-template","ls", function(err, stdout, stderr) {
-  cli("Command complete!", err, stdout, stderr)
-})
-
-exec.do("ls", function(err, stdout, stderr) {
-  cli("Command complete!", err, stdout, stderr)
-})
-
-exec.batch("~/GitHub/rex/rex-foreman", [
-  "ls",
-  "pwd",
-  "git status"
-], function(err, stdout, stderr) {
-  cli("Command batch complete", err, stdout, stderr)
-})
-
-exec.batch([
-  "ls",
-  "pwd",
-  "git status"
-], function(err, stdout, stderr) {
-  cli("Command batch complete", err, stdout, stderr)
+async.series([
+  function(next) {
+    cli( cli.$$.m("TEST:") +" Single exec(), changing directory")
+    exec.do("~/GitHub/rex/rex-template","pwd", function(stdout, stderr) {
+      cli("stdout: " + stdout )
+      cli("stderr: " + stderr )
+      next(null, "Single exec(), change directory")
+    })
+  },
+  function(next) {
+    cli( cli.$$.m("TEST:") +" Single exec(), same directory")
+    exec.do("pwd", function(stdout, stderr) {
+      cli("stdout: " + stdout )
+      cli("stderr: " + stderr )
+      next(null, "Single exec(), same directory")
+    })
+  },
+  function(next) {
+    cli( cli.$$.m("TEST:") +" Batch exec(), changing directory")
+    exec.batch("~/GitHub/rex/rex-foreman", [
+      "echo Batch 1, Command 1",
+      "echo Batch 2, Command 2"
+    ],
+    function() { 
+      next(null, "Batch exec(), change directory")
+    },
+    function(stdout, stderr) {
+      if(stdout)
+        cli("stdout received: " + stdout)
+      else if(stderr)
+        cli("stderr received: " + stderr)
+    })
+  },
+  function(next) {
+    cli( cli.$$.m("TEST:") +" Batch exec(), same directory")
+    exec.batch([
+      "echo Batch 2, Command 1",
+      "echo Batch 2, Command 2"
+    ],
+    function() {
+      next(null, "Batch exec(), same directory")
+    },
+    function(stdout, stderr) {
+      if(stdout)
+        cli("stdout received: " + stdout)
+      else if(stderr)
+        cli("stderr received: " + stderr)
+    })
+  }
+], function(err, tests) {
+  tests.forEach(function(test) {
+    cli.config.appName(test)
+    err ? cli.error(" ") : cli.success(" ")  
+  })
 })
