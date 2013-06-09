@@ -34,16 +34,32 @@
 # THE SOFTWARE.
 # 
 #######*/ 
-var fs = require('fs')
-  , path = require('path')
-  , os = require('os')
-  , _ = require('underscore')._
+var _ = require('underscore')._
+  , exec = require('../lib/rex-exec.js')
   , cli = require('rex-shell')
-  , package = require('../package.json')
-  , config = require('../package.json').config
   
 cli("Unit tests for rex-exec are not configured yet. Patience!")
 
-var app = require('../lib/rex-exec.js')
+exec.do("~/GitHub/rex/rex-template","ls", function(err, stdout, stderr) {
+  cli("Command complete!", err, stdout, stderr)
+})
 
-app.init()
+exec.do("ls", function(err, stdout, stderr) {
+  cli("Command complete!", err, stdout, stderr)
+})
+
+exec.batch("~/GitHub/rex/rex-foreman", [
+  "ls",
+  "pwd",
+  "git status"
+], function(err, stdout, stderr) {
+  cli("Command batch complete", err, stdout, stderr)
+})
+
+exec.batch([
+  "ls",
+  "pwd",
+  "git status"
+], function(err, stdout, stderr) {
+  cli("Command batch complete", err, stdout, stderr)
+})
