@@ -45,7 +45,7 @@ cli.config.appName("rex-exec tests")
 async.series([
   function(next) {
     cli( cli.$$.m("TEST:") +" Single exec(), changing directory")
-    exec.do("~/GitHub/rex/rex-template","pwd", function(stdout, stderr) {
+    exec("~/GitHub/rex/rex-template","pwd", function(stderr, stdout) {
       cli("stdout: " + stdout )
       cli("stderr: " + stderr )
       next(null, "Single exec(), change directory")
@@ -53,7 +53,7 @@ async.series([
   },
   function(next) {
     cli( cli.$$.m("TEST:") +" Single exec(), same directory")
-    exec.do("pwd", function(stdout, stderr) {
+    exec("pwd", function(stderr, stdout) {
       cli("stdout: " + stdout )
       cli("stderr: " + stderr )
       next(null, "Single exec(), same directory")
@@ -68,7 +68,7 @@ async.series([
     function() { 
       next(null, "Batch exec(), change directory")
     },
-    function(stdout, stderr) {
+    function(stderr, stdout) {
       if(stdout)
         cli("stdout received: " + stdout)
       else if(stderr)
@@ -84,7 +84,7 @@ async.series([
     function() {
       next(null, "Batch exec(), same directory")
     },
-    function(stdout, stderr) {
+    function(stderr, stdout) {
       if(stdout)
         cli("stdout received: " + stdout)
       else if(stderr)
