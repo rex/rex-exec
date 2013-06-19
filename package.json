@@ -3,7 +3,7 @@
   "name": "rex-exec",
   "description": "A small set of functions designed to provide a simple way to execute shell commands and process the output.",
   "homepage": "https://github.com/rex/rex-exec",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "main": "lib/rex-exec.js",
   "repository": {
     "type": "git",
