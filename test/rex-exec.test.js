@@ -44,18 +44,26 @@ cli.config.appName("rex-exec tests")
 
 async.series([
   function(next) {
+    cli( cli.$$.m("TEST:") +" Single exec(), complex Git operation")
+    exec("~/Toolbox","git clone https://github.com/rex/rex-ecosystem.git && cd rex-ecosystem && git submodule init && git submodule update && cd .. && rm -rf rex-ecosystem", function(stderr, stdout) {
+      cli("#1 stdout: " + stdout )
+      cli("#1 stderr: " + stderr )
+      next(null, "Single exec(), complex Git operation")
+    })
+  },
+  function(next) {
     cli( cli.$$.m("TEST:") +" Single exec(), changing directory")
     exec("~/GitHub/rex/rex-template","pwd", function(stderr, stdout) {
-      cli("stdout: " + stdout )
-      cli("stderr: " + stderr )
+      cli("#2 stdout: " + stdout )
+      cli("#2 stderr: " + stderr )
       next(null, "Single exec(), change directory")
     })
   },
   function(next) {
     cli( cli.$$.m("TEST:") +" Single exec(), same directory")
     exec("pwd", function(stderr, stdout) {
-      cli("stdout: " + stdout )
-      cli("stderr: " + stderr )
+      cli("#3 stdout: " + stdout )
+      cli("#3 stderr: " + stderr )
       next(null, "Single exec(), same directory")
     })
   },

@@ -24,6 +24,7 @@
     "test": "./test"
   },
   "dependencies": {
+    "rex-utils": "*",
     "rex-shell": "*"
   },
   "devDependencies": {
